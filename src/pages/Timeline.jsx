@@ -75,54 +75,58 @@ function Timeline() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <header className="header">
         <h1>タイムライン</h1>
-        <button onClick={handleLogout}>ログアウト</button>
-      </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handlePost}>
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          placeholder="いまどうしてる？"
-          rows={3}
-          style={{ width: '100%' }}
-        />
-        <button type="submit">投稿する</button>
-      </form>
-      {posts.map((post) => (
-        <div key={post.id} style={{ border: '1px solid #ccc', margin: '8px', padding: '8px' }}>
-          <p><strong>{post.user?.name}</strong></p>
-          <p>{post.body}</p>
-          <p>
-            <button onClick={() => handleLike(post.id)}>
-              ❤️ {post.likes?.length}
-            </button>
-            　
-            <button onClick={() => fetchComments(post.id)}>
-              💬 {post.comments?.length}
-            </button>
-          </p>
-          {comments[post.id] && (
-            <div style={{ marginTop: '8px', paddingLeft: '16px' }}>
-              {comments[post.id].map((comment) => (
-                <div key={comment.id} style={{ borderTop: '1px solid #eee', padding: '4px 0' }}>
-                  <strong>{comment.user?.name}</strong>：{comment.body}
-                </div>
-              ))}
-              <form onSubmit={(e) => handleComment(e, post.id)}>
-                <input
-                  type="text"
-                  value={commentBody[post.id] || ''}
-                  onChange={(e) => setCommentBody((prev) => ({ ...prev, [post.id]: e.target.value }))}
-                  placeholder="コメントを入力"
-                />
-                <button type="submit">送信</button>
-              </form>
+        <button className="btn btn-secondary" onClick={handleLogout}>ログアウト</button>
+      </header>
+      <div className="container">
+        {error && <p className="error">{error}</p>}
+        <div className="post-form">
+          <form onSubmit={handlePost}>
+            <textarea
+              value={body}
+              onChange={(e) => setBody(e.target.value)}
+              placeholder="いまどうしてる？"
+              rows={3}
+            />
+            <div className="post-form-actions">
+              <button type="submit" className="btn btn-primary">投稿する</button>
             </div>
-          )}
+          </form>
         </div>
-      ))}
+        {posts.map((post) => (
+          <div key={post.id} className="post-card">
+            <p className="author">{post.user?.name}</p>
+            <p className="body">{post.body}</p>
+            <div className="post-actions">
+              <button className="btn" onClick={() => handleLike(post.id)}>
+                ❤️ {post.likes?.length}
+              </button>
+              <button className="btn" onClick={() => fetchComments(post.id)}>
+                💬 {post.comments?.length}
+              </button>
+            </div>
+            {comments[post.id] && (
+              <div className="comments">
+                {comments[post.id].map((comment) => (
+                  <div key={comment.id} className="comment-item">
+                    <strong>{comment.user?.name}</strong>：{comment.body}
+                  </div>
+                ))}
+                <form className="comment-form" onSubmit={(e) => handleComment(e, post.id)}>
+                  <input
+                    type="text"
+                    value={commentBody[post.id] || ''}
+                    onChange={(e) => setCommentBody((prev) => ({ ...prev, [post.id]: e.target.value }))}
+                    placeholder="コメントを入力"
+                  />
+                  <button type="submit" className="btn btn-primary">送信</button>
+                </form>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

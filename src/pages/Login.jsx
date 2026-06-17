@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../api'
 
 function Login() {
@@ -21,28 +21,33 @@ function Login() {
   }
 
   return (
-    <div>
-      <h1>ログイン</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>メールアドレス</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    <div className="container">
+      <div className="auth-box">
+        <h1>ログイン</h1>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>メールアドレス</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>パスワード</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">ログイン</button>
+        </form>
+        <div className="link">
+          <Link to="/register">アカウントをお持ちでない方はこちら</Link>
         </div>
-        <div>
-          <label>パスワード</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">ログイン</button>
-      </form>
+      </div>
     </div>
   )
 }

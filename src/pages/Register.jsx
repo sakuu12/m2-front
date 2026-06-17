@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../api'
 
 function Register() {
@@ -28,44 +28,49 @@ function Register() {
   }
 
   return (
-    <div>
-      <h1>アカウント登録</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>名前</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+    <div className="container">
+      <div className="auth-box">
+        <h1>アカウント登録</h1>
+        {error && <p className="error">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>名前</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>メールアドレス</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>パスワード</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>パスワード（確認）</label>
+            <input
+              type="password"
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">登録</button>
+        </form>
+        <div className="link">
+          <Link to="/login">すでにアカウントをお持ちの方はこちら</Link>
         </div>
-        <div>
-          <label>メールアドレス</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>パスワード</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>パスワード（確認）</label>
-          <input
-            type="password"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-          />
-        </div>
-        <button type="submit">登録</button>
-      </form>
+      </div>
     </div>
   )
 }
